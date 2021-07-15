@@ -20,7 +20,7 @@ let map = L.map("map", {
 L.Control.Watermark = L.Control.extend({
     onAdd: function (map) {
         var img = L.DomUtil.create('img');
-        img.src = 'pics/POW_AT_lang_blue.png';
+        img.src = 'icons/POW_AT_lang_blue.png';
         img.style.width = '100px';
         return img;
     },
@@ -86,7 +86,7 @@ overlays.at.addTo(map);
 
 // create custom snowflake icon
 var snowflake = L.icon({
-    iconUrl: 'snowflake.png',
+    iconUrl: 'icons/snowflake.png',
     iconSize: [20, 20], // size of the icon
     iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
     popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
