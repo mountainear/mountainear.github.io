@@ -1,54 +1,8 @@
 body {
     max-width: 1280px;
     margin: auto;
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'open sans', sans-serif;
     background: #f2f2f2
-}
-
-header {
-    text-align: center;
-    margin-top: 1em;
-    background-color: yellow; 
-    width: 100%;
-}
-
-yellowspan {
-    color: #ffee33;
-    background-color: #234b64
-} 
-
-
-header p {
-    text-align: right;
-    font-weight: bold;
-    font-size: 0.8em;
-    padding-right: 2em;
-    margin-top: -2em;
-    
-  }
-
-head p {
-    padding-top: 2em;
-    padding-left: 2em;
-}
-
-h1 {
-    color: #234b64;
-}
-
-h2, h3 {
-    color: #234b64;
-    background-color: yellow;  
-    width: 90%;
-    height:0.5em; 
-    margin-top: 5%;
-    margin-bottom: 5%;   
-}
-
-h4, h5 {
-    color: #234b64;
-    font-weight: lighter;
-    margin-top: 8%
 }
 
 .white,
@@ -65,7 +19,7 @@ header nav img {
 
 a:link,
 a:visited {
-    color: #234b64;
+    color: #000000;
 }
 
 a:active {
@@ -83,8 +37,7 @@ main {
 }
 
 main p {
-    font-family: 'Montserrat',Helvetica,Arial,Lucida,sans-serif;
-    color: #234b64;
+    font-family: 'Open Sans',sans-serif;
     display: block;
     margin-block-start: 1em;
     margin-block-end: 1em;
@@ -92,45 +45,11 @@ main p {
     margin-inline-end: 0px;
 }
 
-main figure {
-    margin-left: 0;
-    width: 90%;
-}
-
-main figure img {
-    border: 1px solid black;
-}
-
-#map h2 {
-    padding-bottom: 1em;
-    width: 90%;
-    height:0.5em; 
-    margin-top: 5%;
-    margin-bottom: 5%;   
-}
 #map {
     width: 90%;
     height: 90vh;
     border: 1px solid gray;
     margin: auto;
-}
-
-#powMap {
-    width: 70%;
-    height: 60vh;
-    border: 1px solid gray;
-    margin: auto;
-}
-
-main ul {
-    list-style-type: circle;
-    font-family: 'Montserrat',Helvetica,Arial,Lucida,sans-serif;
-    color: #234b64;
-    display: block;
-    margin-block-start: 1em;
-    margin-block-end: 1em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
 }
 
 footer .next {
@@ -143,103 +62,10 @@ footer .back {
 
 footer {
     padding: 1em 0 3 em 0;
-    font-family: 'Montserrat',Helvetica,Arial,Lucida,sans-serif;
-    color: #234b64;
+    font-family: 'open sans', sans-serif;
+    color: #000000;
 }
 
 i {
     padding-right: 0.3em;
-}
-
-span {
-    font-size: 1.2em;
-    list-style-type: circle;
-    font-family: 'Montserrat',Helvetica,Arial,Lucida,sans-serif;
-    color: #234b64;
-}
-
-
-
-.mr-3 {
-    margin-right: 00.3em;
-}
-
-.ml-3 {
-    margin-left: 00.3em;
-}
-
-.button-up-arrow-white{
-    content: '';
-    width: 16px;
-    height: 16px;
-    right: -27px;
-    top: 5px;
-    background-image: url(/wp-content/uploads/2019/10/link-out-dark.png);
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: absolute;
-}
-
-@media screen and (max-width: 900px) {
-    main {
-        max-width: 90%;
-    }
-}
-
-@media screen and (max-width: 1280px) {
-    header img.banner {
-        width: 100vw;
-    }
-}
-
-/* Navigationselemnt stylen */
-nav ul {
-	margin: 0;
-	padding: 0;
-	display: flex;
-	flex-direction: column;
-}
-
-nav li {
-	list-style: none;
-	margin: 0.5em;
-	padding: 0;
-	font-size: 1.5em;
-    color: #fff
-}
-
-@media (min-width: 45em) {
-	nav ul {
-		flex-direction: row;
-	}
-	nav li {
-		flex: 1;
-		font-size: 1em;
-	}
-}
-
-nav a {
-	display: block;
-	padding: 0.4em;
-	text-decoration: none;
-	font-weight: bold;
-	text-align: center;
-	border: 1px solid #234b64;
-    color: yellow;
-	transition: all .25s ease-in;
-}
-
-
-/* Style aktuelle Seite */
-nav li[aria-current] a {
-	color: yellow;
-    background-color: #234b64;
-}
-/* Style beim drüber hovern*/
-nav a:focus,
-nav a:hover,
-nav li[aria-current] a:focus,
-nav li[aria-current] a:hover {
-	color: #234b64;
-	background-color: yellow;
 }
