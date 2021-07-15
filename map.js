@@ -1,12 +1,74 @@
 // Kartenscript
 
+// set up basemaps
+var summer = L.tileLayer('https://api.mapbox.com/styles/v1/hanna8br/ckr3mc3gnes5h18mkuzxtvxwn/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFubmE4YnIiLCJhIjoiY2tpYWNudXViMGhscDJ5cmtxOTliZDl0NSJ9.KIYizFkjQ7ODuRfxwFBEtg', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        tileSize: 512,
+        zoomOffset: -1
+    }),
+    winter = L.tileLayer('https://api.mapbox.com/styles/v1/hanna8br/ckr4r0ztm0pzu17mpgr24nkln/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFubmE4YnIiLCJhIjoiY2tpYWNudXViMGhscDJ5cmtxOTliZDl0NSJ9.KIYizFkjQ7ODuRfxwFBEtg'
+    , {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        tileSize: 512,
+        zoomOffset: -1
+    });
+
+// set up map
+let map = L.map("map", {
+    fullscreenControl: true,
+    center: [47.71216, 13.34290],
+    zoom: 7,
+    layers: [summer]
+});
+
+// combining winter and summer to basemaps
+var basemaps = {
+    "Sommer": summer,
+    "Winter": winter
+};
+
+// Overlays für die Themen zum Ein- und Ausschalten definieren
+let overlays = {
+    at: L.featureGroup(),
+    ktn: L.featureGroup(),
+    noe: L.featureGroup(),
+    ooe: L.featureGroup(),
+    sbg: L.featureGroup(),
+    stmk: L.featureGroup(),
+    tir: L.featureGroup(),
+    vbg: L.featureGroup(),
+    hike: L.featureGroup()
+};
+
+// Overlays zur Layer-Control hinzufügen
+let layerControl = L.control.layers({
+    "Sommer": summer,
+    "Winter": winter
+}, {
+    "ganz Österreich": overlays.at,
+        "Kärnten": overlays.ktn,
+        "Niederösterreich": overlays.noe,
+        "Oberösterreich": overlays.ooe,
+        "Salzburg": overlays.sbg,
+        "Steiermark": overlays.stmk,
+        "Tirol": overlays.tir,
+        "Vorarlberg": overlays.vbg,
+        "Wandern": overlays.hike
+}, {
+    collapsed: false
+}).addTo(map);
+overlays.at.addTo(map);
+
 // Karte initialisieren und auf Österreichs Mittelpunkt blicken
+/*
 let map = L.map("map", {
     fullscreenControl: true,
     center: [47.71216, 13.34290],
     zoom: 7,
     layers: [
-        L.tileLayer('https://api.mapbox.com/styles/v1/hanna8br/ckr3mc3gnes5h18mkuzxtvxwn/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFubmE4YnIiLCJhIjoiY2tpYWNudXViMGhscDJ5cmtxOTliZDl0NSJ9.KIYizFkjQ7ODuRfxwFBEtg', {
+        L.tileLayer('https://api.mapbox.com/styles/v1/hanna8br/ckr4r0ztm0pzu17mpgr24nkln/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFubmE4YnIiLCJhIjoiY2tpYWNudXViMGhscDJ5cmtxOTliZDl0NSJ9.KIYizFkjQ7ODuRfxwFBEtg', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
             tileSize: 512,
@@ -15,12 +77,18 @@ let map = L.map("map", {
         //L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png')
     ]
 });
+// summer URL
+'https://api.mapbox.com/styles/v1/hanna8br/ckr3mc3gnes5h18mkuzxtvxwn/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFubmE4YnIiLCJhIjoiY2tpYWNudXViMGhscDJ5cmtxOTliZDl0NSJ9.KIYizFkjQ7ODuRfxwFBEtg'
+// winter URL
+'https://api.mapbox.com/styles/v1/hanna8br/ckr4r0ztm0pzu17mpgr24nkln/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFubmE4YnIiLCJhIjoiY2tpYWNudXViMGhscDJ5cmtxOTliZDl0NSJ9.KIYizFkjQ7ODuRfxwFBEtg'
+*/
+
 
 // add POW Watermark
 L.Control.Watermark = L.Control.extend({
     onAdd: function (map) {
         var img = L.DomUtil.create('img');
-        img.src = 'icons/POW_AT_lang_blue.png';
+        img.src = 'icons/mountainear/mountainear_lang.png';
         img.style.width = '100px';
         return img;
     },
@@ -58,40 +126,23 @@ map.on('layeradd layerremove', function () {
 });
 // source: https://stackoverflow.com/questions/45286918/leafletjs-dynamically-bound-map-to-visible-overlays
 
-// Overlays für die Themen zum Ein- und Ausschalten definieren
-let overlays = {
-    at: L.featureGroup(),
-    ktn: L.featureGroup(),
-    noe: L.featureGroup(),
-    ooe: L.featureGroup(),
-    sbg: L.featureGroup(),
-    stmk: L.featureGroup(),
-    tir: L.featureGroup(),
-    vbg: L.featureGroup()
-};
-
-// Overlays zur Layer-Control hinzufügen
-let layerControl = L.control.layers({
-    "ganz Österreich": overlays.at,
-    "Kärnten": overlays.ktn,
-    "Niederösterreich": overlays.noe,
-    "Oberösterreich": overlays.ooe,
-    "Salzburg": overlays.sbg,
-    "Steiermark": overlays.stmk,
-    "Tirol": overlays.tir,
-    "Vorarlberg": overlays.vbg
-})
-.addTo(map);
-overlays.at.addTo(map);
-
-// create custom snowflake icon
+// create custom icons
+//// snowflake
 var snowflake = L.icon({
-    iconUrl: 'icons/snowflake.png',
+    iconUrl: 'icons/activity/snowflake.png',
     iconSize: [20, 20], // size of the icon
     iconAnchor: [10, 10], // point of the icon which will correspond to marker's location
     popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
 });
+//// hiking
+var hiking = L.icon({
+    iconUrl: 'icons/activity/hiking.svg',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+    popupAnchor: [0, 0]
+});
 
+// SKIGEBIETE
 // Für jeden Eintrag in skigebiete.js werden Marker erzeugt und zum Layer overlays.at ("ganz Österreich") hinzugefügt
 var marker = (function () {
     for (let index = 0; index < SKIGEBIETE.length; index++) {
@@ -201,6 +252,40 @@ var marker = (function () {
     }
 })();
 
+// WANDERUNGEN
+// Für jeden Eintrag in wanderungen.js werden Marker erzeugt und zum Layer overlays.at ("ganz Österreich") hinzugefügt
+var marker = (function () {
+    for (let index = 0; index < WANDERUNGEN.length; index++) {
+        let marker = L.marker([WANDERUNGEN[index].lat, WANDERUNGEN[index].lon], {
+            icon: hiking
+        })
+        marker.bindPopup(`
+            <h2>${WANDERUNGEN[index].name}</h2>
+            <p>${WANDERUNGEN[index].bundesland}</p>
+            <p>${WANDERUNGEN[index].info || ''}</p>
+            <p><a href=${WANDERUNGEN[index].link}><i class="fas fa-link"></i>Zur Website</a></p>
+            <p><a href=${WANDERUNGEN[index].scotty}><i class="fas fa-link"></i>Nächste Verbindung suchen</a></p>
+            `)
+            .addTo(overlays.at)
+            .addTo(overlays.hike)
+        // Mit den nachfolgenden if-Abfragen wird für jedes Bundesland noch ein eigener Layer angelegt
+        if (SKIGEBIETE[index].bundeslandId == "tir") {
+            let marker = L.marker([WANDERUNGEN[index].lat, WANDERUNGEN[index].lon], {
+                icon: hiking
+            })
+            marker.bindPopup(`
+                <h2>${WANDERUNGEN[index].name}</h2>
+                <p>${WANDERUNGEN[index].bundesland}</p>
+                <p>${WANDERUNGEN[index].info || ''}</p>
+                <p><a href=${WANDERUNGEN[index].link}><i class="fas fa-link"></i>Zur Website</a></p>
+                <p><a href=${WANDERUNGEN[index].scotty}><i class="fas fa-link"></i>Nächste Verbindung suchen</a></p>
+                `);
+            marker.addTo(overlays.tir);
+        }
+    }
+})();
+
+
 // Minimap
 let miniMap = new L.Control.MiniMap(
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'), {
@@ -223,4 +308,3 @@ L.control.scale({
 // leaflet hash plugin
 L.hash(map);
 // source: https://cdnjs.com/libraries/leaflet-hash
-
