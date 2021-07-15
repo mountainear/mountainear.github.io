@@ -76,7 +76,7 @@ let layerControl = L.control.layers({
         "Vorarlberg": overlays.vbg,
         "Wandern": overlays.hike
 }, {
-    collapsed: false
+    collapsed: true
 }).addTo(map);
 overlays.at.addTo(map);
 
