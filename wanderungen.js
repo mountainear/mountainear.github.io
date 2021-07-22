@@ -1,6 +1,6 @@
 const WANDERUNGEN = [{
-    "id": "kuehtai",
-    "name": "Kühtai",
+    "id": "hechenberg",
+    "name": "Hechenberg",
     "lat": 47.313244507445054,
     "lon": 11.017325791147448,
     "bundesland": "Tirol",

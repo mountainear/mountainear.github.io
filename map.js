@@ -229,41 +229,20 @@ var marker = (function () {
     }
 })();
 
-var marker = (function () {
-    for (let index = 0; index < WANDERUNGEN.length; index++) {
-        let marker = L.marker([WANDERUNGEN[index].lat, WANDERUNGEN[index].lon], {
-            icon: hiking,
-            title: WANDERUNGEN[index].name
-        })
-        marker.addTo(overlays.at)
-            .addTo(overlays.hike)
-    }
-})();
-marker.on('click',function(){
-
-    var win =  L.control.window(map,{title:'Hello world!',maxWidth:400,modal: true})
-            .content('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac sollicitudin eros, ut imperdiet felis. Pellentesque pretium mi ante, et faucibus ipsum rutrum sed. Proin accumsan luctus consectetur. In sit amet purus id dui scelerisque ultricies non porta dui. Cras sit amet arcu non est efficitur molestie.')
-            .prompt({callback:function(){alert('This is called after OK click!')}})
-            .show()
-});
-
 // WANDERUNGEN
 // Für jeden Eintrag in wanderungen.js werden Marker erzeugt und zum Layer overlays.at ("ganz Österreich") hinzugefügt
-/*
+
 var marker = (function () {
     for (let index = 0; index < WANDERUNGEN.length; index++) {
         let marker = L.marker([WANDERUNGEN[index].lat, WANDERUNGEN[index].lon], {
             icon: hiking
         })
-        marker.bindPopup(`
-            <h2>${WANDERUNGEN[index].name}</h2>
-            <p>${WANDERUNGEN[index].bundesland}</p>
-            <p>${WANDERUNGEN[index].info || ''}</p>
-            <p><a href=${WANDERUNGEN[index].link}><i class="fas fa-link"></i>Zur Website</a></p>
-            <p><a href=${WANDERUNGEN[index].scotty}><i class="fas fa-link"></i>Nächste Verbindung suchen</a></p>
-            <button id="myBtn">Open Modal</button>
-            <p><a href=${WANDERUNGEN[index].outdooractive}>Details zur Tour</a></p>
-            `)
+        var popup = L.responsivePopup({hasTip: false}).setContent(`
+        <h2>${WANDERUNGEN[index].name}</h2>
+        <p>${WANDERUNGEN[index].bundesland}</p>
+        <script type="text/javascript" src="https://www.outdooractive.com/de/embed/24269906/js?mw=true&usr=1yzkg7&key=USR-JSHCRM7N-EMWGMOKJ-4OSSPP9H"></script>`
+        )
+        marker.bindPopup(popup, {minWidth: 100, maxHeight: 100})
             .addTo(overlays.at)
             .addTo(overlays.hike)
         // Mit den nachfolgenden if-Abfragen wird für jedes Bundesland noch ein eigener Layer angelegt
@@ -282,7 +261,14 @@ var marker = (function () {
         }
     }
 })();
-*/
+
+map.on('popupopen',function(e) {
+    e.popup.highlight = L.circleMarker(e.popup.getLatLng(), { radius: 15 , opacity: 0, fillColor: "#000000", fillOpacity: .3 }).addTo(map);
+  });
+          
+  map.on('popupclose',function(e) {
+    map.removeLayer(e.popup.highlight);
+  });
 
 // Minimap
 let miniMap = new L.Control.MiniMap(

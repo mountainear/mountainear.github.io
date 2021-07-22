@@ -11,6 +11,9 @@
     <script src="https://rawgit.com/mapshakers/leaflet-control-window/master/src/L.Control.Window.js"></script>
     <link rel="stylesheet" href="https://rawgit.com/mapshakers/leaflet-control-window/master/src/L.Control.Window.css" />
 
+    <!-- Wanderinfos -->
+    <script defer src="wanderungen.js"></script>
+    
     <style>
         #map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         body { font: 16px/1.4 "Helvetica Neue", Arial, sans-serif; }
@@ -20,7 +23,6 @@
 </head>
 
 <body>
-<a href="https://github.com/mapshakers/leaflet-control-window"><img style="position: absolute; top: 0; right: 0; border: 0; z-index: 3000" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
 
 <div id="map"></div>
 
@@ -28,14 +30,86 @@
 
 <script>
 
-    var map = L.map('map').setView([38,-22], 3);
+    // set up basemaps
+var summer = L.tileLayer('https://api.mapbox.com/styles/v1/hanna8br/ckr3mc3gnes5h18mkuzxtvxwn/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFubmE4YnIiLCJhIjoiY2tpYWNudXViMGhscDJ5cmtxOTliZDl0NSJ9.KIYizFkjQ7ODuRfxwFBEtg', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        tileSize: 512,
+        zoomOffset: -1
+    }),
+    winter = L.tileLayer('https://api.mapbox.com/styles/v1/hanna8br/ckr4r0ztm0pzu17mpgr24nkln/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFubmE4YnIiLCJhIjoiY2tpYWNudXViMGhscDJ5cmtxOTliZDl0NSJ9.KIYizFkjQ7ODuRfxwFBEtg', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        tileSize: 512,
+        zoomOffset: -1
+    });
 
-    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+// set up map
+let map = L.map("map", {
+    fullscreenControl: true,
+    center: [47.71216, 13.34290],
+    zoom: 7,
+    layers: [summer]
+});
 
-    var marker = L.marker([55,-19],{title:"Click to show window." }).addTo(map);
+// combining winter and summer to basemaps
+var basemaps = {
+    "Sommer": summer,
+    "Winter": winter
+};
 
+// Overlays für die Themen zum Ein- und Ausschalten definieren
+let overlays = {
+    at: L.featureGroup(),
+    ktn: L.featureGroup(),
+    noe: L.featureGroup(),
+    ooe: L.featureGroup(),
+    sbg: L.featureGroup(),
+    stmk: L.featureGroup(),
+    tir: L.featureGroup(),
+    vbg: L.featureGroup(),
+    hike: L.featureGroup()
+};
+
+    // Overlays zur Layer-Control hinzufügen
+let layerControl = L.control.layers({
+    "Sommer": summer,
+    "Winter": winter
+}, {
+    "ganz Österreich": overlays.at,
+    "Kärnten": overlays.ktn,
+    "Niederösterreich": overlays.noe,
+    "Oberösterreich": overlays.ooe,
+    "Salzburg": overlays.sbg,
+    "Steiermark": overlays.stmk,
+    "Tirol": overlays.tir,
+    "Vorarlberg": overlays.vbg,
+    "Wandern": overlays.hike
+}, {
+    collapsed: true
+}).addTo(map);
+overlays.at.addTo(map);
+
+//// hiking
+var hiking = L.icon({
+    iconUrl: 'icons/activity/hiking.svg',
+    iconSize: [20, 20],
+    iconAnchor: [10, 10],
+    popupAnchor: [0, 0]
+});
+
+var marker = (function () {
+    for (let index = 0; index < WANDERUNGEN.length; index++) {
+        let marker = L.marker([WANDERUNGEN[index].lat, WANDERUNGEN[index].lon], {
+            icon: hiking,
+            title: WANDERUNGEN[index].name
+        })
+        marker.addTo(overlays.at)
+            .addTo(overlays.hike)
+    }
+})();
+
+    
     marker.on('click',function(){
 
         var win =  L.control.window(map,{title:'Hello world!',maxWidth:400,modal: true})
