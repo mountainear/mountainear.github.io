@@ -7,8 +7,7 @@ var summer = L.tileLayer('https://api.mapbox.com/styles/v1/hanna8br/ckr3mc3gnes5
         tileSize: 512,
         zoomOffset: -1
     }),
-    winter = L.tileLayer('https://api.mapbox.com/styles/v1/hanna8br/ckr4r0ztm0pzu17mpgr24nkln/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFubmE4YnIiLCJhIjoiY2tpYWNudXViMGhscDJ5cmtxOTliZDl0NSJ9.KIYizFkjQ7ODuRfxwFBEtg'
-    , {
+    winter = L.tileLayer('https://api.mapbox.com/styles/v1/hanna8br/ckr4r0ztm0pzu17mpgr24nkln/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiaGFubmE4YnIiLCJhIjoiY2tpYWNudXViMGhscDJ5cmtxOTliZDl0NSJ9.KIYizFkjQ7ODuRfxwFBEtg', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
         tileSize: 512,
@@ -67,14 +66,14 @@ let layerControl = L.control.layers({
     "Winter": winter
 }, {
     "ganz Österreich": overlays.at,
-        "Kärnten": overlays.ktn,
-        "Niederösterreich": overlays.noe,
-        "Oberösterreich": overlays.ooe,
-        "Salzburg": overlays.sbg,
-        "Steiermark": overlays.stmk,
-        "Tirol": overlays.tir,
-        "Vorarlberg": overlays.vbg,
-        "Wandern": overlays.hike
+    "Kärnten": overlays.ktn,
+    "Niederösterreich": overlays.noe,
+    "Oberösterreich": overlays.ooe,
+    "Salzburg": overlays.sbg,
+    "Steiermark": overlays.stmk,
+    "Tirol": overlays.tir,
+    "Vorarlberg": overlays.vbg,
+    "Wandern": overlays.hike
 }, {
     collapsed: true
 }).addTo(map);
@@ -230,8 +229,35 @@ var marker = (function () {
     }
 })();
 
+var marker = (function () {
+    for (let index = 0; index < WANDERUNGEN.length; index++) {
+        let marker = L.marker([WANDERUNGEN[index].lat, WANDERUNGEN[index].lon], {
+            icon: hiking,
+            title: WANDERUNGEN[index].name
+        })
+        marker.addTo(overlays.at)
+            .addTo(overlays.hike)
+        marker.on('click', function () {
+
+            var win = L.control.window(map, {
+                    title: 'Hello world!',
+                    maxWidth: 400,
+                    modal: true
+                })
+                .content('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac sollicitudin eros, ut imperdiet felis. Pellentesque pretium mi ante, et faucibus ipsum rutrum sed. Proin accumsan luctus consectetur. In sit amet purus id dui scelerisque ultricies non porta dui. Cras sit amet arcu non est efficitur molestie.')
+                .prompt({
+                    callback: function () {
+                        alert('This is called after OK click!')
+                    }
+                })
+                .show()
+        });
+    }
+})();
+
 // WANDERUNGEN
 // Für jeden Eintrag in wanderungen.js werden Marker erzeugt und zum Layer overlays.at ("ganz Österreich") hinzugefügt
+/*
 var marker = (function () {
     for (let index = 0; index < WANDERUNGEN.length; index++) {
         let marker = L.marker([WANDERUNGEN[index].lat, WANDERUNGEN[index].lon], {
@@ -243,11 +269,13 @@ var marker = (function () {
             <p>${WANDERUNGEN[index].info || ''}</p>
             <p><a href=${WANDERUNGEN[index].link}><i class="fas fa-link"></i>Zur Website</a></p>
             <p><a href=${WANDERUNGEN[index].scotty}><i class="fas fa-link"></i>Nächste Verbindung suchen</a></p>
+            <button id="myBtn">Open Modal</button>
+            <p><a href=${WANDERUNGEN[index].outdooractive}>Details zur Tour</a></p>
             `)
             .addTo(overlays.at)
             .addTo(overlays.hike)
         // Mit den nachfolgenden if-Abfragen wird für jedes Bundesland noch ein eigener Layer angelegt
-        if (SKIGEBIETE[index].bundeslandId == "tir") {
+        if (WANDERUNGEN[index].bundeslandId == "tir") {
             let marker = L.marker([WANDERUNGEN[index].lat, WANDERUNGEN[index].lon], {
                 icon: hiking
             })
@@ -262,7 +290,7 @@ var marker = (function () {
         }
     }
 })();
-
+*/
 
 // Minimap
 let miniMap = new L.Control.MiniMap(

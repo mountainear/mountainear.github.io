@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <!-- favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="icons/favicons/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="icons/favicons/apple-icon-60x60.png">
@@ -60,7 +60,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-minimap/3.6.1/Control.MiniMap.js"
         integrity="sha512-ceQPs2CHke3gSINLt/JV37W1rfJOM64yuH999hnRhTP7tNtcSBp5hlTKhn8CEIhsFweSBrZMPVotAKjoyxGWNg=="
         crossorigin="anonymous"></script>
+    
+    <!-- Leaflet Control Window -->
+    <script src="...path-to-files.../L.Control.Window.js"></script>
+    <link rel="stylesheet" href="...path-to-file.../L.Control.Window.css" />
 
+  
     <!-- Stylesheet -->
     <link rel="stylesheet" href="main.css">
 
@@ -90,52 +95,93 @@
         <!-- Flex-Container -->
         <div class="Flex-Container">
 
-        <!-- Karte -->
-        <div id="map"></div>
+            <!-- Karte -->
+            <div id="map"></div>
 
-        <!-- Tourbox -->
-        <div id="tourbox">
-            <!-- Outdooractive / Alpenvereinaktiv Plugin -->
-            <script type="text/javascript" src="https://www.outdooractive.com/de/embed/111320108/js?mw=true&usr=1yzkg7&key=USR-JSHCRM7N-EMWGMOKJ-4OSSPP9H"></script>
-        </div>
+            <!-- Tourbox -->
+            <div id="tourbox">
+                <!-- Outdooractive / Alpenvereinaktiv Plugin -->
+                <script type="text/javascript"
+                    src="https://www.outdooractive.com/de/embed/24269906/js?mw=true&usr=1yzkg7&key=USR-JSHCRM7N-EMWGMOKJ-4OSSPP9H">
+                </script>
+            </div>
 
-        <!-- Öffi-Verbindungen für diese Tour suchen -->
-        <div id="search-connections">
-            <button class="button">Öffi-Verbindungen für diese Tour suchen</button>
+            <!-- Öffi-Verbindungen für diese Tour suchen -->
+            <div id="search-connections">
+                <button class="button">Öffi-Verbindungen für diese Tour suchen</button>
 
-        </div>
+            </div>
 
-        <!-- ÖBB-Box -->
-        <div id="oebbbox">
-            <h3>Finde die beste Öffi-Verbindung für deine Tour</h3>
-            <form>
-                <label for="start">Starthaltestelle</label><br>
-                <input type="text" id="startname" name="sname"><br><br>
-                <label for="start">Zielhaltestelle & Ausgangspunkt der Tour</label><br>
-                <input type="text" id="endname" name="ename" value="Kranebitten"><br><br>
+            <!-- ÖBB-Box -->
+            <div id="oebbbox">
+                <h3>Finde die beste Öffi-Verbindung für deine Tour</h3>
+                <form>
+                    <label for="start">Starthaltestelle</label><br>
+                    <input type="text" id="startname" name="sname"><br><br>
+                    <label for="start">Zielhaltestelle & Ausgangspunkt der Tour</label><br>
+                    <input type="text" id="endname" name="ename" value="Kranebitten"><br><br>
+                    <br>
+                    <label for="starttime">Datum & Uhrzeit</label><br>
+                    <br>
+                    <input type="radio" id="departure" name="deparr" value="Abfahrt">
+                    <label for="departure">Abfahrt</label><br>
+                    <input type="radio" id="arrival" name="deparr" value="Ankunft">
+                    <label for="arrival">Ankunft</label><br>
+                    <br>
+                    <input type="datetime-local" id="starttime" name="stime" value="Kranebitten Bhf"><br><br>
+                    <button class="button">Suche starten</button>
+                </form>
                 <br>
-                <label for="starttime">Datum & Uhrzeit</label><br>
-                <br>
-                <input type="radio" id="departure" name="deparr" value="Abfahrt">
-                <label for="departure">Abfahrt</label><br>
-                <input type="radio" id="arrival" name="deparr" value="Ankunft">
-                <label for="arrival">Ankunft</label><br>
-                <br>
-                <input type="datetime-local" id="starttime" name="stime" value="Kranebitten Bhf"><br><br>
-                <button class="button">Suche starten</button>
-            </form>
-            <br>
+            </div>
+
+            <!-- Connectionbox -->
+            <div id="connectionbox">
+                Hier sollen dann die Verbindungen entsprechend der Tour angezeigt werden, nachdem die
+                User:innen auf "Suche starten" geklickt haben.
+                <br><br>
+                <button class="button">Ticket buchen</button>
+
+            </div>
         </div>
 
-        <!-- Connectionbox -->
-        <div id="connectionbox">
-            Hier sollen dann die Verbindungen entsprechend der Tour angezeigt werden, nachdem die
-            User:innen auf "Suche starten" geklickt haben.
-            <br><br>
-            <button class="button">Ticket buchen</button>
-
+        <!-- The Modal -->
+        <button id="myBtn">Open Modal</button>
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>Some text in the Modal..</p>
+            </div>
         </div>
-    </div>
+
+        <script>
+            // Modal
+            // Get the modal
+            var modal = document.getElementById("myModal");
+
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // When the user clicks on the button, open the modal
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
 
 
     </main>
