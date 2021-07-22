@@ -237,23 +237,15 @@ var marker = (function () {
         })
         marker.addTo(overlays.at)
             .addTo(overlays.hike)
-        marker.on('click', function () {
-
-            var win = L.control.window(map, {
-                    title: 'Hello world!',
-                    maxWidth: 400,
-                    modal: true
-                })
-                .content('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac sollicitudin eros, ut imperdiet felis. Pellentesque pretium mi ante, et faucibus ipsum rutrum sed. Proin accumsan luctus consectetur. In sit amet purus id dui scelerisque ultricies non porta dui. Cras sit amet arcu non est efficitur molestie.')
-                .prompt({
-                    callback: function () {
-                        alert('This is called after OK click!')
-                    }
-                })
-                .show()
-        });
     }
 })();
+marker.on('click',function(){
+
+    var win =  L.control.window(map,{title:'Hello world!',maxWidth:400,modal: true})
+            .content('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris ac sollicitudin eros, ut imperdiet felis. Pellentesque pretium mi ante, et faucibus ipsum rutrum sed. Proin accumsan luctus consectetur. In sit amet purus id dui scelerisque ultricies non porta dui. Cras sit amet arcu non est efficitur molestie.')
+            .prompt({callback:function(){alert('This is called after OK click!')}})
+            .show()
+});
 
 // WANDERUNGEN
 // Für jeden Eintrag in wanderungen.js werden Marker erzeugt und zum Layer overlays.at ("ganz Österreich") hinzugefügt
