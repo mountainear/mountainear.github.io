@@ -45,6 +45,14 @@ main p {
     margin-inline-end: 0px;
 }
 
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
 #map {
     width: 80%;
     height: 90vh;
@@ -87,8 +95,6 @@ main p {
     float: right;
 }
 
-
-
 footer {
     padding: 1em 0 3 em 0;
     font-family: 'open sans', sans-serif;
@@ -117,4 +123,12 @@ footer {
 .button:hover {
     background-color: red;
     color: white;
+}
+
+
+/* Settings for mobile devices */
+@media (max-width: 800px) {
+    .flex-container {
+        flex-direction: column;
+    }
 }
