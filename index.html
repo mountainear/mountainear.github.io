@@ -103,7 +103,25 @@
         </div>
 
         <!-- ÖBB-Box -->
-        <div id="oebbbox">Hier sollen dann die Verbindungen entsprechend der Tour angezeigt werden, nachdem die
+        <div id="oebbbox">
+            <h3>Finde die beste Öffi-Verbindung für deine Tour</h3>
+            <form>
+                <label for="start">Starthaltestelle</label><br>
+                <input type="text" id="startname" name="sname"><br><br>
+                <label for="start">Zielhaltestelle & Ausgangspunkt der Tour</label><br>
+                <input type="text" id="endname" name="ename" value="Kranebitten Bhf"><br><br>
+                <br>
+                <label for="starttime">Datum & Uhrzeit</label><br>
+                <br>
+                <input type="radio" id="departure" name="deparr" value="Abfahrt">
+                <label for="departure">Abfahrt</label><br>
+                <input type="radio" id="arrival" name="deparr" value="Ankunft">
+                <label for="arrival">Ankunft</label><br>
+                <br>
+                <input type="datetime-local" id="starttime" name="stime" value="Kranebitten Bhf"><br><br>
+                <button class="button">Suche starten</button>
+            </form>
+            Hier sollen dann die Verbindungen entsprechend der Tour angezeigt werden, nachdem die
             User:innen auf "Verbindung suchen geklickt haben."</div>
 
 
