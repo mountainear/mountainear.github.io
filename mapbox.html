@@ -8,7 +8,9 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
     <title>mountainear</title>
     <!-- Marker jsons -->
-    <script> src='skigebiete.json'</script>
+    <script>
+        src = 'skigebiete.json'
+    </script>
 
 </head>
 
@@ -24,6 +26,14 @@
         <style>
             .mapboxgl-popup {
                 max-width: 200px;
+            }
+
+            .marker {
+                background-image: url('icons/activity/snowflake.png');
+                background-size: cover;
+                width: 20px;
+                height: 20px;
+                cursor: pointer
             }
         </style>
         <div id='map' style='width: 100%; height: 100vh;'></div>
@@ -101,10 +111,57 @@
             marker.togglePopup(); // toggle popup open or closed
 
 
-            /// ADD MARKERS ///
-            map.addSource('some id', {
-                type: 'geojson',
-                data: 'skigebiete.json'
+            /// ADD DATA ///
+            var geojson = {
+                'type': 'FeatureCollection',
+                'features': [{
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [15, 47]
+                        },
+                        'properties': {
+                            'title': 'Mapbox',
+                            'description': 'Washington, D.C.'
+                        }
+                    },
+                    {
+                        'type': 'Feature',
+                        'geometry': {
+                            'type': 'Point',
+                            'coordinates': [15.5, 47.5]
+                        },
+                        'properties': {
+                            'title': 'Mapbox',
+                            'description': 'San Francisco, California'
+                        }
+                    }
+                ]
+            };
+
+
+            // add markers to map
+            geojson.features.forEach(function (marker) {
+                // create a HTML element for each feature
+                var el = document.createElement('div');
+                el.className = 'marker';
+
+                // make a marker for each feature and add it to the map
+                new mapboxgl.Marker(el)
+                    .setLngLat(marker.geometry.coordinates)
+                    .setPopup(
+                        new mapboxgl.Popup({
+                            offset: 25
+                        }) // add popups
+                        .setHTML(
+                            '<h3>' +
+                            marker.properties.title +
+                            '</h3><p>' +
+                            marker.properties.description +
+                            '</p>'
+                        )
+                    )
+                    .addTo(map);
             });
         </script>
 
