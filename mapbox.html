@@ -8,9 +8,7 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.css' rel='stylesheet' />
     <title>mountainear</title>
     <!-- Marker jsons -->
-    <script>
-        src = 'skigebiete.json'
-    </script>
+    <script src='skigebiete.json'></script>
 
 </head>
 
@@ -30,6 +28,14 @@
 
             .marker {
                 background-image: url('icons/activity/snowflake.png');
+                background-size: cover;
+                width: 20px;
+                height: 20px;
+                cursor: pointer
+            }
+
+            .markerSkigebiete {
+                background-image: url('icons/activity/hiking.svg');
                 background-size: cover;
                 width: 20px;
                 height: 20px;
@@ -163,6 +169,51 @@
                     )
                     .addTo(map);
             });
+
+
+            map.on('load', function () {
+                map.addSource('skigebiete', {
+                    'type': 'geojson',
+                    'data': 'skigebiete.geojson'
+                });
+
+                map.addLayer({
+                    'id': 'skigebiete-layer',
+                    'type': 'circle',
+                    'source': 'skigebiete',
+                    'paint': {
+                        'circle-radius': 8,
+                        'circle-stroke-width': 8,
+                        'circle-color': 'red',
+                        'circle-stroke-color': 'white',
+
+                    }
+                });
+
+                var mySource = map.getSource('some id');
+
+
+                // add markers to map
+                mySource.forEach(function (marker) {
+
+                    // create a HTML element for each feature
+                    var el = document.createElement('div');
+                    el.className = 'markerSkigebiete';
+
+                    // make a marker for each feature and add to the map
+                    new mapboxgl.Marker(el)
+                        .setLngLat(marker.geometry.coordinates)
+                        .addTo(map);
+                });
+
+            });
+
+            map.on('layeradd', function (e) {
+                var marker = e.layer,
+                    feature = 'skigebiete.geojson';
+                marker.setIcon('icons/activity/hiking.svg');
+            });
+            map.setGeoJSON('skigebiete.geojson');
         </script>
 
 
