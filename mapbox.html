@@ -23,11 +23,11 @@
                 max-width: 200px;
             }
 
-            .marker {
-                background-image: url('icons/activity/snowflake.png');
+            .markerSki-Alpin {
+                background-image: url('icons/activity/Wintersport/Ski-Alpin.svg');
                 background-size: cover;
                 width: 20px;
-                height: 20px;
+                height: 27px;
                 cursor: pointer
             }
         </style>
@@ -116,7 +116,7 @@
             skigebiete.features.forEach(function (marker) {
                 // create a HTML element for each feature
                 var el = document.createElement('div');
-                el.className = 'marker';
+                el.className = 'markerSki-Alpin';
 
                 // make a marker for each feature and add it to the map
                 new mapboxgl.Marker(el)
