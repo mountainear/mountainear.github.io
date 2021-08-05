@@ -170,12 +170,43 @@
                     .addTo(map);
             });
 
+            var skigebieteData = '{ "type": "FeatureCollection", "features": [ { "type": "Feature", "geometry": { "type": "Point", "coordinates": [ 14.93314161,47.51801708 ] }, "properties": { "name":"Pr�bichl", "category":"winter", "discipline":"skialpine", "info":"tolles Familienskigebiet" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [ 13.68960749,47.40425314 ] }, "properties": { "name":"Schladming", "category":"winter", "discipline":"skialpine", "info":"gut zu erreichen Bahnhof in unmittelbarer N�he zum Skigebiet" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":"", "info":"" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":"", "info":"" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":"", "info":"" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":" ", "info":"" } } ] }';
+
+            var skigebiete = JSON.parse(skigebieteData);
+            console.log(skigebiete);
+
+            skigebiete.features.forEach(function (marker) {
+                // create a HTML element for each feature
+                var el = document.createElement('div');
+                el.className = 'markerSkigebiete';
+
+                // make a marker for each feature and add it to the map
+                new mapboxgl.Marker(el)
+                    .setLngLat(marker.geometry.coordinates)
+                    .setPopup(
+                        new mapboxgl.Popup({
+                            offset: 25
+                        }) // add popups
+                        .setHTML(
+                            '<h3>' +
+                            marker.properties.name +
+                            '</h3><p>' +
+                            marker.properties.info +
+                            '</p>'
+                        )
+                    )
+                    .addTo(map);
+            });
+
+
+
 
             map.on('load', function () {
                 map.addSource('skigebiete', {
                     'type': 'geojson',
-                    'data': 'skigebiete.geojson'
-                });
+                    'data': 'skigebiete.geojson',
+                    'features': features
+                }).addTo(map);
 
                 map.addLayer({
                     'id': 'skigebiete-layer',
@@ -189,31 +220,39 @@
 
                     }
                 });
-
-                var mySource = map.getSource('some id');
-
-
-                // add markers to map
-                mySource.forEach(function (marker) {
-
-                    // create a HTML element for each feature
-                    var el = document.createElement('div');
-                    el.className = 'markerSkigebiete';
-
-                    // make a marker for each feature and add to the map
-                    new mapboxgl.Marker(el)
-                        .setLngLat(marker.geometry.coordinates)
-                        .addTo(map);
+                map.addLayer({
+                    'id': 'hiking-layer',
+                    'type': 'circle',
+                    'source': 'skigebiete'
                 });
 
             });
 
-            map.on('layeradd', function (e) {
-                var marker = e.layer,
-                    feature = 'skigebiete.geojson';
-                marker.setIcon('icons/activity/hiking.svg');
+            // add markers to map
+            features.forEach(function (marker) {
+                // create a HTML element for each feature
+                var el = document.createElement('div');
+                el.className = 'marker';
+
+                // make a marker for each feature and add it to the map
+                new mapboxgl.Marker(el)
+                    .setLngLat(marker.geometry.coordinates)
+                    .setPopup(
+                        new mapboxgl.Popup({
+                            offset: 25
+                        }) // add popups
+                        .setHTML(
+                            '<h3>' +
+                            marker.properties.name +
+                            '</h3><p>' +
+                            marker.properties.info +
+                            '</p>'
+                        )
+                    )
+                    .addTo(map);
             });
-            map.setGeoJSON('skigebiete.geojson');
+
+            
         </script>
 
 

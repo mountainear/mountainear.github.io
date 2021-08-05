@@ -1,83 +1,84 @@
 {
-   "type": "FeatureCollection",
-   "features": [
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ 14.93314161,47.51801708 ]
-    },
-    "properties": {
-    "name":"Pr�bichl",
-    "category":"winter",
-    "discipline":"ski-alpine",
-    "info":"tolles Familienskigebiet"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  [ 13.68960749,47.40425314 ]
-    },
-    "properties": {
-    "name":"Schladming",
-    "category":"winter",
-    "discipline":"ski-alpine",
-    "info":"gut zu erreichen, Bahnhof in unmittelbarer N�he zum Skigebiet"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  { }
-    },
-    "properties": {
-    "name":"",
-    "category":"",
-    "discipline":"",
-    "info":""
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  { }
-    },
-    "properties": {
-    "name":"",
-    "category":"",
-    "discipline":"",
-    "info":""
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  { }
-    },
-    "properties": {
-    "name":"",
-    "category":"",
-    "discipline":"",
-    "info":""
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-       "type": "Point",
-       "coordinates":  { }
-    },
-    "properties": {
-    "name":"",
-    "category":"",
-    "discipline":", ",
-    "info":""
-    }
-  }
-]
+    "type": "FeatureCollection",
+    "features": [{
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [14.93314161, 47.51801708]
+            },
+            "properties": {
+                "name": "Präbichl",
+                "category": "winter",
+                "discipline": "ski-alpine",
+                "info": "tolles Familienskigebiet",
+                "marker-symbol": "icons/activity/hiking.svg."
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [13.68960749, 47.40425314]
+            },
+            "properties": {
+                "name": "Schladming",
+                "category": "winter",
+                "discipline": "ski-alpine",
+                "info": "gut zu erreichen, Bahnhof in unmittelbarer Nähe zum Skigebiet",
+                "marker-symbol": "icons/activity/hiking.svg."
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": {}
+            },
+            "properties": {
+                "name": "",
+                "category": "",
+                "discipline": "",
+                "info": ""
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": {}
+            },
+            "properties": {
+                "name": "",
+                "category": "",
+                "discipline": "",
+                "info": ""
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": {}
+            },
+            "properties": {
+                "name": "",
+                "category": "",
+                "discipline": "",
+                "info": ""
+            }
+        },
+        {
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": {}
+            },
+            "properties": {
+                "name": "",
+                "category": "",
+                "discipline": ", ",
+                "info": ""
+            }
+        }
+    ]
 }
