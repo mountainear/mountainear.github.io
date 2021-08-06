@@ -2,6 +2,9 @@
 <html lang="de">
 
 <head>
+    <!------- Plugins ------->
+    <!-- Ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <!-- Mapbox Kartenscript-->
     <script src='https://api.mapbox.com/mapbox-gl-js/v2.3.1/mapbox-gl.js'></script>
     <!-- Mapbox Stylesheet -->
@@ -25,6 +28,14 @@
 
             .markerSki-Alpin {
                 background-image: url('icons/activity/Wintersport/Ski-Alpin.svg');
+                background-size: cover;
+                width: 20px;
+                height: 27px;
+                cursor: pointer
+            }
+
+            .markerSkitour {
+                background-image: url('icons/activity/Wintersport/Skitour.svg');
                 background-size: cover;
                 width: 20px;
                 height: 27px;
@@ -105,8 +116,39 @@
 
             marker.togglePopup(); // toggle popup open or closed
 
+            /// SKIGEBIETE - GEOJSON AUS QGIS ///
+
+            var skitourData = '{ "type": "FeatureCollection", "features": [ { "type": "Feature", "geometry": { "type": "Point", "coordinates": [ 11.29463,47.21789 ] }, "properties": { "name":"Birgitzköpfl", "hm":"600", "info":"Mit der Bus-Anreise ein paar Höhenmeter sparen. Über die Birgitzer Alm aufs Birg" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [ 11.41636,47.08288 ] }, "properties": { "name":"Blaser", "hm":"900", "info":"Von Trins auf den Blaser - heißer Tipp bei kritischen Verhältnissen" } } ] }';
+
+            var skitour = JSON.parse(skitourData);
+            console.log(skitour);
+
+            skitour.features.forEach(function (marker) {
+                // create a HTML element for each feature
+                var el = document.createElement('div');
+                el.className = 'markerSkitour';
+
+                // make a marker for each feature and add it to the map
+                new mapboxgl.Marker(el)
+                    .setLngLat(marker.geometry.coordinates)
+                    .setPopup(
+                        new mapboxgl.Popup({
+                            offset: 25
+                        }) // add popups
+                        .setHTML(
+                            '<h3>' +
+                            marker.properties.name +
+                            '</h3><p>' +
+                            marker.properties.info +
+                            '</p>'
+                        )
+                    )
+                    .addTo(map);
+            });
+
             /// SKIGEBIETE ///
-            var skigebieteData = '{ "type": "FeatureCollection", "features": [ { "type": "Feature", "geometry": { "type": "Point", "coordinates": [ 14.93314161,47.51801708 ] }, "properties": { "name":"Pr�bichl", "category":"winter", "discipline":"skialpine", "info":"tolles Familienskigebiet" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [ 13.68960749,47.40425314 ] }, "properties": { "name":"Schladming", "category":"winter", "discipline":"skialpine", "info":"gut zu erreichen Bahnhof in unmittelbarer N�he zum Skigebiet" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":"", "info":"" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":"", "info":"" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":"", "info":"" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":" ", "info":"" } } ] }';
+            var skigebieteData =
+                '{ "type": "FeatureCollection", "features": [ { "type": "Feature", "geometry": { "type": "Point", "coordinates": [ 14.93314161,47.51801708 ] }, "properties": { "name":"Pr�bichl", "category":"winter", "discipline":"skialpine", "info":"tolles Familienskigebiet" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [ 13.68960749,47.40425314 ] }, "properties": { "name":"Schladming", "category":"winter", "discipline":"skialpine", "info":"gut zu erreichen Bahnhof in unmittelbarer N�he zum Skigebiet" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":"", "info":"" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":"", "info":"" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":"", "info":"" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": { } }, "properties": { "name":"", "category":"", "discipline":" ", "info":"" } } ] }';
 
             var skigebiete = JSON.parse(skigebieteData);
             console.log(skigebiete);
@@ -133,6 +175,8 @@
                     )
                     .addTo(map);
             });
+
+            
         </script>
 
 
